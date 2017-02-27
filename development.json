@@ -1,0 +1,25 @@
+{
+  "apps": [{
+    "name": "sse-server",
+    "script": "server/index.js",
+    "node_args": [
+      "--harmony"
+    ],
+    "log_date_format": "YYYY-MM-DD HH:mm Z",
+    "exec_interpreter": "node",
+    "instances": "1",
+    "max_memory_restart": "100M",
+    "ignoreWatch": [
+      "[\\/\\\\]\\./",
+      "node_modules",
+      ".git"
+    ],
+    "watch": true,
+    "env": {
+      "DEV": true,
+      "USE_AGENT": true,
+      "PORT": 3009,
+      "NODE_ENV": "development"
+    }
+  }]
+}

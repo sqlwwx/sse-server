@@ -1,0 +1,12 @@
+{
+  "name": "sse-server",
+  "version": "1.0.0",
+  "main": "server/index.js",
+  "author": "sqlwwx <wwx_2012@hotmail.com> (www.wuweixing.com)",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^2.0.1",
+    "koa2-cors": "^2.0.3",
+    "redis": "^2.6.5"
+  }
+}
