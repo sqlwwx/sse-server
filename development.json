@@ -9,6 +9,8 @@
     "exec_interpreter": "node",
     "instances": "1",
     "max_memory_restart": "100M",
+    "wait_ready": true,
+    "listen_timeout": 25000,
     "ignoreWatch": [
       "[\\/\\\\]\\./",
       "node_modules",
@@ -21,5 +23,17 @@
       "PORT": 3009,
       "NODE_ENV": "development"
     }
-  }]
+  }],
+  "deploy": {
+    "dev": {
+      "user": "wwx",
+      "host": "wwx.lab.wuweixing.com",
+      "port": "2200",
+      "ref": "origin/master",
+      "repo": "git@git.coding.net:sqlwwx/sse-server.git",
+      "path": "/home/wwx/production/sse-server",
+      "pre-deploy-local": "echo 'This is a local executed command'",
+      "post-deploy": "npm install && pm2 startOrReload development.json --env dev"
+    }
+  }
 }

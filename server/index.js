@@ -65,4 +65,25 @@ app.on('error', (err, ctx) =>
   console.error('server error', err, ctx)
 );
 
-app.listen(process.env.PORT || 3009, process.env.IP || '0.0.0.0');
+const port = process.env.PORT || 3009
+
+app.listen(port, process.env.IP || '0.0.0.0', () => {
+  server.emit('listened')
+  console.log('Server listening at port %d', port);
+});
+
+app.on('listened', () => {
+  if (process.send) {
+    process.send('ready');
+  }
+})
+
+process.on('SIGINT', () => {
+  setTimeout(() => {
+    app.close(() => {
+      setTimeout(() => {
+        process.exit(0);
+      }, 5000);
+    })
+  }, 5000);
+})
