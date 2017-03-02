@@ -68,7 +68,7 @@ app.on('error', (err, ctx) =>
 const port = process.env.PORT || 3009
 
 app.listen(port, process.env.IP || '0.0.0.0', () => {
-  server.emit('listened')
+  app.emit('listened')
   console.log('Server listening at port %d', port);
 });
 
