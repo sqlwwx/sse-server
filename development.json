@@ -10,7 +10,7 @@
     "instances": "1",
     "max_memory_restart": "100M",
     "wait_ready": true,
-    "listen_timeout": 25000,
+    "listen_timeout": 20000,
     "ignoreWatch": [
       "[\\/\\\\]\\./",
       "node_modules",

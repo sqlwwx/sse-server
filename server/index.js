@@ -67,7 +67,7 @@ app.on('error', (err, ctx) =>
 
 const port = process.env.PORT || 3009
 
-app.listen(port, process.env.IP || '0.0.0.0', () => {
+let server = app.listen(port, process.env.IP || '0.0.0.0', () => {
   app.emit('listened')
   console.log('Server listening at port %d', port);
 });
@@ -80,10 +80,14 @@ app.on('listened', () => {
 
 process.on('SIGINT', () => {
   setTimeout(() => {
-    app.close(() => {
+    server.close(() => {
       setTimeout(() => {
         process.exit(0);
       }, 5000);
     })
   }, 5000);
+})
+
+process.on('uncaughtException', function (err) {
+  console.error(err)
 })
