@@ -8,5 +8,11 @@
     "koa": "^2.0.1",
     "koa2-cors": "^2.0.3",
     "redis": "^2.6.5"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }
