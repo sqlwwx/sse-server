@@ -29,10 +29,10 @@ let latestValue = getVaule()
 
 setInterval(() => {
   let value = getVaule()
-  console.log(latestValue.memInfo.ratio, value.memInfo.ratio)
   if (latestValue.memInfo.ratio === value.memInfo.ratio) {
     return
   }
+  console.log(latestValue.memInfo.ratio, value.memInfo.ratio)
   dispatcher.emit('message', value)
   latestValue = value
 }, 5000)
