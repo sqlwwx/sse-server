@@ -1,7 +1,7 @@
 const redis = require('redis')
 
 module.exports = (prefix) => {
-  const client = redis.createClient()
+  const client = redis.createClient(process.env.REDIS_URL || 'redis://localhost:6379')
   client.psubscribe(prefix + ':*')
   client.on('pmessage', (pattern, channel, message) => {
     client.emit(channel, message)

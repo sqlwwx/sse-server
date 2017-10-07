@@ -11,3 +11,9 @@ PUBLISH channel message
 127.0.0.1:6379> PUBLISH changeBicycle:12222 "{position: []}"
 ```
 ### Server-sent Events
+
+## docker
+```
+docker build -t sse-server .
+docker run --name sse-server -d -p 3010:3000 sse-serve
+```

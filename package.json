@@ -24,6 +24,7 @@
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "heapdump": "^0.3.9",
     "jsinspect": "^0.12.7",
     "memwatch-next": "^0.3.0",
     "plato": "^1.7.0"
