@@ -1,19 +1,20 @@
-const Koa = require('koa')
-const fs = require('fs')
-const path = require('path')
-const cors = require('koa2-cors')
+import Koa from 'koa'
+import fs from 'fs'
+import path from 'path'
+import cors from 'koa2-cors'
+import safeProcess from './utils/process'
 
+const port = process.env.PORT || 3009
 const PassThrough = require('stream').PassThrough
-
-let app = new Koa()
+const app = module.exports = new Koa()
 
 app.use(cors())
 
 // x-response-time
 app.use(async (ctx, next) => {
-  const start = new Date()
+  const start = Date.now()
   await next()
-  const ms = new Date() - start
+  const ms = Date.now() - start
   ctx.set('X-Response-Time', `${ms}ms`)
 })
 
@@ -22,7 +23,7 @@ app.use(async (ctx, next) => {
   const start = new Date()
   await next()
   const ms = new Date() - start
-  console.log(`[${start.getTime()}] ${ctx.method} ${ctx.url} - ${ms}ms`)
+  console.log(`${ctx.ip} ${ctx.url} - ${ms}ms`)
 })
 
 app.use(async (ctx, next) => {
@@ -38,6 +39,7 @@ app.use(async (ctx, next) => {
 
 let streamHandles = {}
 app.use(ctx => {
+  // otherwise node will automatically close this connection in 2 minutes
   ctx.req.setTimeout(Number.MAX_VALUE)
 
   ctx.type = 'text/event-stream; charset=utf-8'
@@ -51,7 +53,7 @@ app.use(ctx => {
   let streamHandle = streamHandles[handlePath]
   if (!streamHandle) {
     if (fs.existsSync(path.join(__dirname, handlePath))) {
-      handle = require(handlePath)
+      const handle = require(handlePath)
       streamHandle = streamHandles[handlePath] = handle
     } else {
       ctx.throw(404)
@@ -61,13 +63,11 @@ app.use(ctx => {
   streamHandle(ctx)
 })
 
-app.on('error', (err, ctx) =>
+app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
-)
+})
 
-const port = process.env.PORT || 3009
-
-let server = app.listen(port, process.env.IP || '0.0.0.0', () => {
+const server = app.listen(port, process.env.IP || '0.0.0.0', () => {
   app.emit('listened')
   console.log('Server listening at port %d', port)
 })
@@ -78,16 +78,4 @@ app.on('listened', () => {
   }
 })
 
-process.on('SIGINT', () => {
-  setTimeout(() => {
-    server.close(() => {
-      setTimeout(() => {
-        process.exit(0)
-      }, 5000)
-    })
-  }, 5000)
-})
-
-process.on('uncaughtException', function (err) {
-  console.error(err)
-})
+safeProcess(server)

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <div id="app">
+      <input v-model="baseURL" style="width: 80%"/>
+      <button @click="addServer(baseURL)">addServer</button>
+      <div v-for="(memInfo, baseURL) in results">
+        {{baseURL}}
+        <svg style="font-size: 7em; height: 1em;" class="progress-circle" viewBox="0 0 44 44">
+          <text style="fill: #039;" x="22" y="22" font-size="7" text-anchor="middle" alignment-baseline="central">{{memInfo.ratio}}%</text>
+          <circle style="stroke: #e5e5e5;" r="16" cx="22" cy="22" stroke-width="4" fill="none"></circle>
+          <circle :style="{strokeDashoffset: 100 - memInfo.ratio, stroke: '#038', transition: 'stroke-dashoffset .5s ease-out' }" r="16" cx="22" cy="22" transform="rotate(-90, 22, 22)" stroke-width="4" fill="none" stroke-dasharray="100" stroke-dashoffset="21.5">
+          </circle>
+        </svg>
+      </div>
+    </div>
+    <script src="https://cdn.bootcss.com/babel-polyfill/7.0.0-beta.2/polyfill.min.js"></script>
+    <script src="https://cdn.bootcss.com/event-source-polyfill/0.0.9/eventsource.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+    <script>
+new Vue({
+  el: '#app',
+  data () {
+    return {
+      baseURL: 'http://api.lab.wuweixing.com:3010',
+      results: {}
+    }
+  },
+  methods: {
+    addServer (baseURL) {
+      let self = this
+      const url = baseURL + '/stream/memInfo/change'
+      let source = new EventSource(url);
+      self.$set(self.results, url, self.results[baseURL] || { ratio: 0 });
+      source.addEventListener('message', (event) => {
+        let data = JSON.parse(event.data)
+        self.$set(self.results, url, data);
+      })
+    }
+  }
+})
+    </script>
+  </body>
+</html>
+

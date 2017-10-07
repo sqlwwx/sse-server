@@ -1,7 +1,7 @@
 {
   "apps": [{
-    "name": "sse-server-dev",
-    "script": "dev.js",
+    "name": "sse-server-prod",
+    "script": "index.js",
     "node_args": [
       "--harmony"
     ],
@@ -15,12 +15,12 @@
       "node_modules",
       ".git"
     ],
-    "watch": true,
+    "watch": false,
     "env": {
       "DEV": true,
       "USE_AGENT": true,
-      "PORT": 3009,
-      "NODE_ENV": "development"
+      "PORT": 3010,
+      "NODE_ENV": "production"
     }
   }],
   "deploy": {

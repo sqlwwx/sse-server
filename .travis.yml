@@ -1,0 +1,5 @@
+before_script:
+    - "npm install -g jsinspect"
+
+script:
+    - "jsinspect server || true"

@@ -4,15 +4,28 @@
   "main": "server/index.js",
   "author": "sqlwwx <wwx_2012@hotmail.com> (www.wuweixing.com)",
   "license": "MIT",
+  "scripts": {
+    "lint": "eslint --format 'node_modules/eslint-friendly-formatter' server --fix",
+    "jsinspect": "jsinspect ./server",
+    "plato": "plato -r -d report -e .eslintrc.json server"
+  },
   "dependencies": {
-    "koa": "^2.0.1",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "koa": "^2.3.0",
     "koa2-cors": "^2.0.3",
-    "redis": "^2.6.5"
+    "redis": "^2.8.0"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
+    "eslint": "^4.8.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-friendly-formatter": "^3.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-standard": "^3.0.1",
+    "jsinspect": "^0.12.7",
+    "memwatch-next": "^0.3.0",
+    "plato": "^1.7.0"
   }
 }
