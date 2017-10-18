@@ -2,6 +2,7 @@ import Koa from 'koa'
 import fs from 'fs'
 import path from 'path'
 import cors from 'koa2-cors'
+import KoaStatic from 'koa-static'
 import safeProcess from './utils/process'
 
 const port = process.env.PORT || 3009
@@ -9,6 +10,8 @@ const PassThrough = require('stream').PassThrough
 const app = module.exports = new Koa()
 
 app.use(cors())
+
+app.use(KoaStatic(path.resolve(__dirname, '../client')))
 
 // x-response-time
 app.use(async (ctx, next) => {

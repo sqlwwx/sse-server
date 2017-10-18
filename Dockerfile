@@ -7,8 +7,9 @@ EXPOSE 3000
 
 WORKDIR /work
 
-COPY server server/
 COPY package.json .
+COPY server server/
+COPY client client/
 COPY process.json .
 COPY index.js .
 COPY .babelrc .
