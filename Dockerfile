@@ -8,11 +8,9 @@ EXPOSE 3000
 WORKDIR /work
 
 COPY package.json .
-COPY server server/
-COPY client client/
+COPY build build/
 COPY process.json .
 COPY index.js .
-COPY .babelrc .
 
 RUN npm install --production --registry=https://registry.npm.taobao.org \
   && rm -rf /tmp/*
