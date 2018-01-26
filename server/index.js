@@ -43,7 +43,8 @@ app.use(async (ctx, next) => {
 let streamHandles = {}
 app.use(ctx => {
   // otherwise node will automatically close this connection in 2 minutes
-  ctx.req.setTimeout(Number.MAX_VALUE)
+  // ctx.req.setTimeout(Number.MAX_VALUE)
+  ctx.req.setTimeout(2147483647)
 
   ctx.type = 'text/event-stream; charset=utf-8'
   ctx.set('Cache-Control', 'no-cache')
