@@ -11,5 +11,5 @@ memwatch.on('leak', function(info) {
   console.log(info);
   console.log('---');
 });
-require('.')
+require('./server')
 
