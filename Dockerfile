@@ -1,6 +1,9 @@
-FROM sqlwwx/pm2:latest
+FROM node:9-alpine
 
 MAINTAINER sqlwwx <wwx_2012@hotmail.com>
+
+RUN npm i -g pm2 --registry=https://registry.npm.taobao.org \
+  && rm -rf /tmp/*
 
 # Expose ports
 EXPOSE 3000
